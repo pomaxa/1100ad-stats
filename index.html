@@ -13,17 +13,16 @@
 <div data-role="page" id="foo">
 
     <div data-role="header">
-        <h1>Foo <a href="#" onclick="refreshData();">aa</a> </h1>
+        <h1>Top cities</h1>
     </div><!-- /header -->
 
     <div data-role="content">
 
-        <table data-role="table" class="ui-responsive">
-            <thead>
-            <tr><th>Muahaha</th></tr>
+        <table data-role="table" data-mode="columntoggle" class="ui-responsive">
+            <thead id="top-header">
+
             </thead>
             <tbody id="top-data">
-
             </tbody>
 
         </table>
@@ -57,12 +56,29 @@
     }
 
     function drawTable(data){
+        topHeaderIsSet = false;
+        var topHeader = $("<tr></tr>");
         $.each(data, function (key, value) {
 
             var row = $('<tr></tr>').addClass('topRow').css('cursor', 'pointer');
             $.each(value, function(k,v){
-                $('<td></td>').html(v).appendTo(row);
+
+                if( k == 'topName' || k == 'sideName' || k == 'integer') {
+
+                } else {
+                    if(topHeaderIsSet == false) {
+                        $('<th></th>').html(k).appendTo(topHeader);
+                    }
+
+                    $('<td></td>').html(v).appendTo(row);
+
+                }
             });
+
+            if(topHeaderIsSet == false) {
+                topHeader.appendTo("#top-header");
+                topHeaderIsSet = true;
+            }
 
             row.appendTo($("#top-data"));
         });

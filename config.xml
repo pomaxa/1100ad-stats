@@ -22,5 +22,5 @@
 
     <preference name="orientation" value="portrait" />
 
-    <access uri="https://transportationit.com" subdomains="true"></access>
+    <access uri="http://new.1100ad.com" subdomains="true"></access>
 </widget>

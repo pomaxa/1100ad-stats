@@ -22,7 +22,7 @@
             <thead>
             <tr><th>Muahaha</th></tr>
             </thead>
-            <tbody>
+            <tbody id="top-data">
 
             </tbody>
 
@@ -40,9 +40,10 @@
 
 
     $(function(){
+        var requestData = { page:0 };
         $.get('http://new.1100ad.com/en/android/top', requestData)
                 .done(function(data) {
-                    console.log(data);
+                    drawTable(data);
                 });
     });
 
@@ -56,7 +57,15 @@
     }
 
     function drawTable(data){
-        alert(data);
+        $.each(data, function (key, value) {
+
+            var row = $('<tr></tr>').addClass('topRow').css('cursor', 'pointer');
+            $.each(value, function(k,v){
+                $('<td></td>').html(v).appendTo(row);
+            });
+
+            row.appendTo($("#top-data"));
+        });
     }
 </script>
 

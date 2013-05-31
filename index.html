@@ -38,9 +38,21 @@
 
 <script>
 
+
+    $(function(){
+        $.get('http://new.1100ad.com/en/android/top', requestData)
+                .done(function(data) {
+                    console.log(data);
+                });
+    });
+
     function refreshData() {
-        var requestData = { page:0 }
-        var topData = $.get('http://new1100ad.dev/app_dev.php/en/android/top', requestData, drawTable(data), 'json');
+        var requestData = { page:0 };
+
+        $.get('http://new.1100ad.com/en/android/top', requestData)
+                .done(function(data) {
+                    console.log(data);
+                });
     }
 
     function drawTable(data){

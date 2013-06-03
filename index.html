@@ -4,8 +4,10 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
-    <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="//code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery.mobile-1.3.1.min.js"></script>
+    <!--<script type="text/javascript" charset="utf-8" src="js/cordova.js"></script>-->
+    <!--<script type="text/javascript" charset="utf-8" src="js/OptionsMenu.js"></script>-->
 </head>
 
 <body>
@@ -48,6 +50,37 @@
     app.topName = 'topCities';
 
     $(function(){
+
+
+
+        var onSettings = function() {
+            console.log("settings");
+        };
+
+        var onHelp = function() {
+            console.log("help");
+        };
+
+        var optionsmenu = new OptionsMenu({
+            id: "optionsmenu",
+            items: [
+                [ {
+                    label: "Settings",
+//                    image: "menu/settings.png",
+                    action: onSettings
+                },
+                    {
+                        label: "Help",
+//                        image: "menu/help.png",
+                        action: onHelp
+                    } ]
+            ]
+        });
+
+
+
+
+
         requestData(app.page, app.pageSize, app.topName);
     });
 

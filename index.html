@@ -24,30 +24,44 @@
             </thead>
             <tbody id="top-data">
             </tbody>
-
+            <tfoot>
+                <tr>
+                    <td><a href="#"  data-role="button" data-corners="false" data-icon="arrow-l" data-iconpos="left">Prev</a></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="#" data-role="button" data-corners="false" data-icon="arrow-r" data-iconpos="right">Next</a></td>
+                </tr>
+            </tfoot>
         </table>
-
-
     </div><!-- /content -->
 
     <div data-role="footer">
-        <h4>Page Footer</h4>
+
     </div><!-- /footer -->
 </div><!-- /page -->
 
 <script>
 
+    app = {};
+    app.page = 0;
+    app.pageSize = 10;
+    app.topName = 'topCities';
 
     $(function(){
-        var requestData = { page:0 };
+        requestData(app.page, app.pageSize, app.topName);
+    });
+
+    function requestData(pageNum, pageSize, topName)
+    {
+        var requestData = { page: pageNum, page_size: pageSize, top_name: topName };
         $.get('http://new.1100ad.com/en/android/top', requestData)
                 .done(function(data) {
                     drawTable(data);
                 });
-    });
+    }
 
     function refreshData() {
-        var requestData = { page:0 };
+        var requestData = { page: app.page, page_size: app.pageSize, top_name: app.topName };
 
         $.get('http://new.1100ad.com/en/android/top', requestData)
                 .done(function(data) {
@@ -63,16 +77,36 @@
             var row = $('<tr></tr>').addClass('topRow').css('cursor', 'pointer');
             $.each(value, function(k,v){
 
-                if( k == 'topName' || k == 'sideName' || k == 'integer') {
+                if(app.topName == 'topCities') {
+                    if( k == 'topName' || k == 'sideName' || k == 'integer') {
 
-                } else {
-                    if(topHeaderIsSet == false) {
-                        $('<th></th>').html(k).appendTo(topHeader);
+                    } else {
+                        if(topHeaderIsSet == false) {
+                            var text = '';
+                            switch (k) {
+                                case 'login':
+                                    text = 'Login';
+                                    break;
+                                case 'serverKey':
+                                    text = 'Server';
+                                    break;
+                                case 'decimal':
+                                    text = 'Points';
+                                    break;
+                                case 'string':
+                                    text = 'City Name';
+                                    break;
+                            }
+
+                            $('<th></th>').html(text).appendTo(topHeader);
+                        }
+
+                        $('<td></td>').html(v).appendTo(row);
+
                     }
 
-                    $('<td></td>').html(v).appendTo(row);
-
                 }
+
             });
 
             if(topHeaderIsSet == false) {
@@ -82,6 +116,12 @@
 
             row.appendTo($("#top-data"));
         });
+
+//        var prevBtn = '<a href="#"  data-role="button" data-corners="false" data-icon="arrow-l" data-iconpos="left">Prev</a>';
+//        var nextBtn = '<a href="#" data-role="button" data-corners="false" data-icon="arrow-r" data-iconpos="right">Next</a>';
+//
+//        tbody = $("<tr><td colspan='2'>"+prevBtn+"</td><td colspan='2'><a href=''>"+nextBtn+"</a></td></tr>");
+//        tbody.appendTo($("#top-data"));
     }
 </script>
 
